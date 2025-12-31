@@ -1,0 +1,339 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #2c5aa0;
+    --secondary-color: #4a8fdf;
+    --accent-color: #1a3a6b;
+    --light-color: #e6f0ff;
+    --snow-color: #ffffff;
+    --text-color: #333;
+    --bg-color: #f0f8ff;
+    --card-bg: rgba(255, 255, 255, 0.9);
+}
+
+body {
+    background: linear-gradient(to bottom, #e6f0ff, #c6e0ff, #a6d0ff);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Снежинки */
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.snowflake {
+    position: absolute;
+    background-color: var(--snow-color);
+    border-radius: 50%;
+    opacity: 0.8;
+    top: -10px;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Шапка */
+header {
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+h1 {
+    color: var(--accent-color);
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Основной контент */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Кнопки дней недели */
+.days-container {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.days-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+}
+
+.days-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.day-btn {
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 18px 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.day-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+}
+
+.day-btn.active {
+    background: linear-gradient(to bottom, var(--secondary-color), #2a7fff);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.day-btn i {
+    font-size: 1.5rem;
+}
+
+/* Блок расписания */
+.schedule-container {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-height: 300px;
+}
+
+.schedule-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    color: var(--accent-color);
+    font-size: 1.8rem;
+}
+
+.schedule-title i {
+    color: var(--primary-color);
+}
+
+.schedule-content {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.lesson-item {
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(230, 240, 255, 0.5);
+    border-radius: 10px;
+    border-left: 5px solid var(--primary-color);
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lesson-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-time {
+    font-weight: bold;
+    min-width: 140px;
+    color: white;
+    font-size: 1.2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-name {
+    flex-grow: 1;
+    font-size: 1.4rem;
+    margin-left: 25px;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.lesson-icon {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-right: 15px;
+    width: 40px;
+    text-align: center;
+}
+
+.no-schedule {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.day-info {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: rgba(42, 127, 255, 0.05);
+    border-radius: 10px;
+    border: 1px dashed var(--primary-color);
+    color: var(--accent-color);
+    font-style: italic;
+}
+
+/* Футер */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 25px;
+    color: var(--accent-color);
+    font-size: 1rem;
+    border-top: 1px solid rgba(42, 127, 255, 0.2);
+}
+
+.footer-logo {
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .days-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .lesson-item {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 25px 15px;
+    }
+    
+    .lesson-time {
+        min-width: auto;
+        margin: 0;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .lesson-name {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+    
+    .lesson-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .days-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .lesson-time {
+        font-size: 1.2rem;
+        padding: 10px 15px;
+    }
+    
+    .lesson-name {
+        font-size: 1.2rem;
+    }
+}

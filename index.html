@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusSchool - Зимние каникулы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #4a8fdf;
+            --accent-color: #1a3a6b;
+            --light-color: #e6f0ff;
+            --snow-color: #ffffff;
+            --text-color: #333;
+            --bg-color: #f0f8ff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #e6f0ff, #c6e0ff, #a6d0ff);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Снежинки */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background-color: var(--snow-color);
+            border-radius: 50%;
+            opacity: 0.8;
+            top: -10px;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* КОНТЕЙНЕР - ВАШЕ ИЗМЕНЕНИЕ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px; /* Изменено с 20px на 10px */
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Шапка */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .welcome-text {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Основной контент */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* Кнопки дней недели */
+        .days-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .days-title {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        .days-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .day-btn {
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 18px 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .day-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
+        }
+        
+        .day-btn.active {
+            background: linear-gradient(to bottom, var(--secondary-color), #2a7fff);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .day-btn i {
+            font-size: 1.5rem;
+        }
+        
+        /* Блок расписания */
+        .schedule-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            min-height: 300px;
+        }
+        
+        .schedule-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+        
+        .schedule-title i {
+            color: var(--primary-color);
+        }
+        
+        .schedule-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .lesson-item {
+            display: flex;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: rgba(230, 240, 255, 0.5);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .lesson-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ВРЕМЯ ЗАНЯТИЙ - ВАШЕ ИЗМЕНЕНИЕ */
+        .lesson-time {
+            font-weight: bold;
+            min-width: 140px;
+            color: white;
+            font-size: 1.2rem; /* Изменено с 1.3rem на 1.2rem */
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 10px 15px; /* Изменено с 12px 18px на 10px 15px */
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lesson-name {
+            flex-grow: 1;
+            font-size: 1.4rem;
+            margin-left: 25px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        .lesson-icon {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .no-schedule {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+        
+        .day-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(42, 127, 255, 0.05);
+            border-radius: 10px;
+            border: 1px dashed var(--primary-color);
+            color: var(--accent-color);
+            font-style: italic;
+        }
+        
+        /* Футер */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: var(--accent-color);
+            font-size: 1rem;
+            border-top: 1px solid rgba(42, 127, 255, 0.2);
+        }
+        
+        .footer-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .days-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .lesson-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 25px 15px;
+            }
+            
+            .lesson-time {
+                min-width: auto;
+                margin: 0;
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .lesson-name {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .lesson-icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .days-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .lesson-time {
+                font-size: 1.2rem;
+                padding: 10px 15px;
+            }
+            
+            .lesson-name {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Снежинки -->
+    <div class="snowflakes" id="snowflakes"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-mosque logo-icon"></i>
+                <h1>MusSchool</h1>
+            </div>
+            <div class="subtitle">Проводим зимние каникулы с пользой!</div>
+            <div class="welcome-text">
+                Дорогие учащиеся и родители! Мы подготовили для вас специальную программу на зимние каникулы. 
+                Выберите день недели, чтобы посмотреть расписание занятий. Занятия помогут провести время интересно и познавательно!
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <section class="days-container">
+                <h2 class="days-title">Выберите день недели</h2>
+                <div class="days-buttons">
+                    <button class="day-btn" data-day="monday">
+                        <i class="fas fa-hands"></i>
+                        Понедельник
+                    </button>
+                    <button class="day-btn" data-day="tuesday">
+                        <i class="fas fa-book-open"></i>
+                        Вторник
+                    </button>
+                    <button class="day-btn" data-day="wednesday">
+                        <i class="fas fa-mosque"></i>
+                        Среда
+                    </button>
+                    <button class="day-btn" data-day="thursday">
+                        <i class="fas fa-paintbrush"></i>
+                        Четверг
+                    </button>
+                    <button class="day-btn" data-day="friday">
+                        <i class="fas fa-utensils"></i>
+                        Пятница
+                    </button>
+                    <button class="day-btn" data-day="saturday">
+                        <i class="fas fa-calculator"></i>
+                        Суббота
+                    </button>
+                    <button class="day-btn" data-day="sunday">
+                        <i class="fas fa-cut"></i>
+                        Воскресенье
+                    </button>
+                </div>
+            </section>
+            
+            <section class="schedule-container">
+                <h2 class="schedule-title">
+                    <i class="far fa-calendar-alt"></i>
+                    <span id="selected-day">Расписание занятий</span>
+                </h2>
+                <div class="schedule-content" id="schedule-content">
+                    <div class="no-schedule">
+                        <i class="fas fa-hand-pointer fa-2x" style="margin-bottom: 15px; color: #4a8fdf;"></i><br>
+                        Выберите день недели, чтобы увидеть расписание занятий на зимние каникулы
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p class="footer-logo">© 2023 MusSchool - Мусульманская онлайн школа</p>
+            <p>Зимние каникулы — время для развития и духовного роста</p>
+        </footer>
+    </div>
+
+    <script>
+        // Создание снежинок - теперь снег точно будет идти!
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 120; // Увеличил количество снежинок
+            
+            // Очищаем контейнер перед созданием новых снежинок
+            snowflakesContainer.innerHTML = '';
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                // Случайные размеры снежинок
+                const size = Math.random() * 12 + 3;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // Случайная начальная позиция
+                snowflake.style.left = `${Math.random() * 100}%`;
+                
+                // Случайная прозрачность
+                snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                // Случайная длительность анимации
+                const duration = Math.random() * 20 + 10;
+                snowflake.style.animationDuration = `${duration}s`;
+                
+                // Задержка начала анимации
+                snowflake.style.animationDelay = `${Math.random() * 15}s`;
+                
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+        
+        // Обновлённое расписание
+        const scheduleData = {
+            monday: {
+                dayName: "Понедельник",
+                lessons: [
+                    { time: "12:00", name: "Лепка", icon: "fas fa-hands" }
+                ]
+            },
+            tuesday: {
+                dayName: "Вторник",
+                lessons: [
+                    { time: "14:00", name: "Адаб", icon: "fas fa-book-open" }
+                ]
+            },
+            wednesday: {
+                dayName: "Среда",
+                lessons: [
+                    { time: "18:00", name: "История Пророков", icon: "fas fa-mosque" }
+                ]
+            },
+            thursday: {
+                dayName: "Четверг",
+                lessons: [
+                    { time: "19:00", name: "Поделки", icon: "fas fa-paintbrush" }
+                ]
+            },
+            friday: {
+                dayName: "Пятница",
+                lessons: [
+                    { time: "14:00", name: "Кулинария", icon: "fas fa-utensils" }
+                ]
+            },
+            saturday: {
+                dayName: "Суббота",
+                lessons: [
+                    { time: "13:00", name: "Математика для 1 класса", icon: "fas fa-calculator" }
+                ]
+            },
+            sunday: {
+                dayName: "Воскресенье",
+                lessons: [
+                    { time: "13:40", name: "Поделки", icon: "fas fa-cut" }
+                ]
+            }
+        };
+        
+        // Иконки для каждого типа занятий
+        const lessonIcons = {
+            "Лепка": "fas fa-hands",
+            "Адаб": "fas fa-book-open",
+            "История Пророков": "fas fa-mosque",
+            "Поделки": "fas fa-paintbrush",
+            "Кулинария": "fas fa-utensils",
+            "Математика для 1 класса": "fas fa-calculator"
+        };
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создаем снежинки сразу при загрузке
+            createSnowflakes();
+            
+            // Находим все кнопки дней
+            const dayButtons = document.querySelectorAll('.day-btn');
+            const selectedDayElement = document.getElementById('selected-day');
+            const scheduleContentElement = document.getElementById('schedule-content');
+            
+            // Обработчик нажатия на кнопку дня
+            dayButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    dayButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Добавляем активный класс нажатой кнопке
+                    this.classList.add('active');
+                    
+                    // Получаем выбранный день
+                    const selectedDay = this.getAttribute('data-day');
+                    
+                    // Обновляем заголовок
+                    selectedDayElement.textContent = `Расписание на ${scheduleData[selectedDay].dayName}`;
+                    
+                    // Отображаем расписание
+                    displaySchedule(selectedDay);
+                });
+            });
+            
+            // Функция отображения расписания
+            function displaySchedule(day) {
+                const schedule = scheduleData[day];
+                let scheduleHTML = '';
+                
+                if (schedule.lessons && schedule.lessons.length > 0) {
+                    schedule.lessons.forEach(lesson => {
+                        scheduleHTML += `
+                            <div class="lesson-item">
+                                <div class="lesson-icon">
+                                    <i class="${lesson.icon}"></i>
+                                </div>
+                                <div class="lesson-time">${lesson.time}</div>
+                                <div class="lesson-name">${lesson.name}</div>
+                            </div>
+                        `;
+                    });
+                    
+                    // Добавляем информацию о дне
+                    let dayInfo = "";
+                    if (day === "wednesday") {
+                        dayInfo = "История Пророков - увлекательное занятие о жизни и уроках пророков";
+                    } else if (day === "thursday" || day === "sunday") {
+                        dayInfo = "Творческие занятия развивают воображение и моторику";
+                    } else if (day === "tuesday") {
+                        dayInfo = "Адаб - уроки исламской этики и хорошего поведения";
+                    } else if (day === "friday") {
+                        dayInfo = "Кулинария - готовим полезные и вкусные блюда";
+                    } else if (day === "saturday") {
+                        dayInfo = "Математика в игровой форме для первоклассников";
+                    } else if (day === "monday") {
+                        dayInfo = "Лепка развивает творческие способности и мелкую моторику";
+                    }
+                    
+                    scheduleHTML += `
+                        <div class="day-info">
+                            <i class="fas fa-info-circle"></i> ${dayInfo}
+                        </div>
+                    `;
+                } else {
+                    scheduleHTML = `
+                        <div class="no-schedule">
+                            <i class="fas fa-calendar-times fa-2x" style="margin-bottom: 15px; color: #4a8fdf;"></i><br>
+                            На этот день расписание еще не готово
+                        </div>
+                    `;
+                }
+                
+                scheduleContentElement.innerHTML = scheduleHTML;
+            }
+            
+            // По умолчанию выбираем понедельник
+            const mondayButton = document.querySelector('.day-btn[data-day="monday"]');
+            mondayButton.classList.add('active');
+            selectedDayElement.textContent = `Расписание на ${scheduleData.monday.dayName}`;
+            displaySchedule('monday');
+            
+            // Периодически обновляем снежинки (на случай, если анимация завершится)
+            setInterval(createSnowflakes, 60000); // Каждую минуту
+        });
+        
+        // Также создаем снежинки, когда пользователь возвращается на вкладку
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                createSnowflakes();
+            }
+        });
+    </script>
+</body>
+                  </html>
